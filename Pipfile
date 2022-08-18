@@ -16,6 +16,7 @@ pytest-cov = "*"
 responses = "*"
 pytest-sugar = "*"
 djangorestframework = "*"
+pytest-xdist = "*"
 
 [dev-packages]
 

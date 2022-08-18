@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -6,6 +8,7 @@ from apps.webhook.choices import AUTH_OPTIONS
 
 
 class Webhook(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name='webhooks', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     identifier = models.CharField(max_length=255, blank=True, null=True, db_index=True)
