@@ -1,33 +1,33 @@
-import json
-
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
+
+from apps.webhook.choices import AUTH_OPTIONS
 
 
 class Webhook(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name='webhooks', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    url = models.URLField()
     identifier = models.CharField(max_length=255, blank=True, null=True, db_index=True)
-    json_data = models.TextField(blank=True, null=True)
     sending_attempts = models.PositiveIntegerField(default=0)
     sended = models.BooleanField(default=False)
     failed = models.BooleanField(default=False)
     return_from_receiver_text = models.TextField(blank=True, null=True)
-    return_from_receiver_json = models.TextField(blank=True, null=True)
+    return_from_receiver_json = models.JSONField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
+
+    url = models.URLField()
+    method = models.CharField(max_length=255, default='post')
+    json_data = models.JSONField(blank=True, null=True)
+    authentication = models.CharField(max_length=1, default='0', choices=AUTH_OPTIONS)
+    auth_username = models.CharField(max_length=255, blank=True, null=True)
+    auth_password = models.CharField(max_length=255, blank=True, null=True)
+    api_key = models.CharField(max_length=255, blank=True, null=True)
+    url_token = models.URLField(blank=True, null=True)
+    headers = models.JSONField(blank=True, null=True)
 
     def __str__(self):
         return f'<Webhook: {self.user.username} #{self.identifier}>'
-
-    @property
-    def get_json_data(self):
-        return json.loads(self.json_data or '{}')
-
-    @property
-    def get_return_from_receiver_json(self):
-        return json.loads(self.return_from_receiver_json or '{}')
 
     def log_error(self, error: Exception, status: int = None):
         self.increment_attempts()

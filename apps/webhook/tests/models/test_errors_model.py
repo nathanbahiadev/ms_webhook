@@ -1,13 +1,4 @@
 import pytest
-from model_bakery import baker
-
-from apps.webhook.models import Errors
-
-
-@pytest.fixture
-@pytest.mark.django_db
-def error():
-    return baker.make(Errors)
 
 
 @pytest.mark.django_db

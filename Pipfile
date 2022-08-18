@@ -8,6 +8,13 @@ django = "*"
 pytest-django = "*"
 model-bakery = "*"
 pytest = "*"
+requests = "*"
+psycopg-binary = "*"
+python-decouple = "*"
+psycopg2 = "*"
+pytest-cov = "*"
+responses = "*"
+pytest-sugar = "*"
 
 [dev-packages]
 

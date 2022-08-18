@@ -1,51 +1,11 @@
-import json
 from unittest.mock import patch
 
 import pytest
-from model_bakery import baker
-
-from apps.webhook.models import Webhook
-
-
-@pytest.fixture()
-@pytest.mark.django_db
-def webhook():
-    return baker.make(Webhook)
 
 
 @pytest.mark.django_db
 def test_str_webhook(webhook):
     assert str(webhook) == f'<Webhook: {webhook.user.username} #{webhook.identifier}>'
-
-
-@pytest.mark.django_db
-def test_get_json_data_webhook_must_be_none(webhook):
-    assert isinstance(webhook.get_json_data, dict)
-    assert webhook.get_json_data == {}
-
-
-@pytest.mark.django_db
-def test_get_return_from_receiver_json_must_be_none(webhook):
-    assert isinstance(webhook.get_return_from_receiver_json, dict)
-    assert webhook.get_return_from_receiver_json == {}
-
-
-@pytest.mark.django_db
-def test_get_json_data_webhook_must_a_dict():
-    json_data = {'name': 'nathan', 'age': 28}
-    webhook = baker.make(Webhook, json_data=json.dumps(json_data))
-    assert isinstance(webhook.get_json_data, dict)
-    assert isinstance(webhook.json_data, str)
-    assert webhook.get_json_data == json_data
-
-
-@pytest.mark.django_db
-def test_get_return_from_receiver_json_must_be_a_dict():
-    return_from_receiver_json = {'name': 'nathan', 'age': 28}
-    webhook = baker.make(Webhook, return_from_receiver_json=json.dumps(return_from_receiver_json))
-    assert isinstance(webhook.get_return_from_receiver_json, dict)
-    assert isinstance(webhook.return_from_receiver_json, str)
-    assert webhook.get_return_from_receiver_json == return_from_receiver_json
 
 
 @pytest.mark.django_db
