@@ -15,6 +15,7 @@ psycopg2 = "*"
 pytest-cov = "*"
 responses = "*"
 pytest-sugar = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

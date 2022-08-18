@@ -21,6 +21,9 @@ INSTALLED_APPS = [
 
     'apps.webhook.apps.WebhookConfig',
     'apps.users.apps.UsersConfig',
+
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -95,3 +98,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MAX_SENDING_ATTEMPTS = 3
 
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
