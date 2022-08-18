@@ -99,6 +99,8 @@ MAX_SENDING_ATTEMPTS = 3
 
 AUTH_USER_MODEL = 'users.User'
 
+PAGINATOR = 20
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',

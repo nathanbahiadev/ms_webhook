@@ -14,3 +14,9 @@ class WebhookSerializer(serializers.ModelSerializer):
             'json_data': {'required': True},
             'user': {'read_only': True},
         }
+
+
+class WebhookListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Webhook
+        fields = ['user', 'id', 'url', 'method', 'authentication', 'get_authentication_display', 'created_at']
