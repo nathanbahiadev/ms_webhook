@@ -5,7 +5,7 @@ import pytest
 
 @pytest.mark.django_db
 def test_str_webhook(webhook):
-    assert str(webhook) == f'<Webhook: {webhook.user.username} #{webhook.identifier}>'
+    assert str(webhook) == f'<Webhook: {webhook.user.username} #{webhook.id}>'
 
 
 @pytest.mark.django_db

@@ -30,7 +30,7 @@ class Webhook(models.Model):
     headers = models.JSONField(blank=True, null=True)
 
     def __str__(self):
-        return f'<Webhook: {self.user.username} #{self.identifier}>'
+        return f'<Webhook: {self.user.username} #{self.id}>'
 
     def log_error(self, error: Exception, status: int = None):
         self.increment_attempts()

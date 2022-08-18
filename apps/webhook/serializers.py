@@ -1,10 +1,17 @@
 from rest_framework import serializers
 
-from apps.webhook.models import Webhook
+from apps.webhook.models import Webhook, Errors
+
+
+class ErrorsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Errors
+        exclude = ['webhook']
 
 
 class WebhookSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    logs = ErrorsSerializer(many=True, read_only=True)
 
     class Meta:
         model = Webhook

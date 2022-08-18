@@ -5,17 +5,18 @@ import pytest
 import requests.exceptions
 import responses
 
-from apps.webhook.sender import WebhookSenderConsumer, Sender
+from apps.webhook.sender.senders import BasicSender
+from apps.webhook.sender.consumer import WebhookSenderConsumer
 
 
 @pytest.fixture
 def consumer(webhook):
-    return WebhookSenderConsumer(webhook, sender_class=Sender)
+    return WebhookSenderConsumer(webhook, sender_class=BasicSender)
 
 
 @pytest.mark.django_db
 def test_create_webhook_consumer_consumer_instance(consumer):
-    assert consumer.Sender.__name__ == 'Sender'
+    assert consumer.Sender.__name__ == 'BasicSender'
 
 
 @pytest.mark.django_db
@@ -62,7 +63,7 @@ def test_consumer_send_with_failed_no_authenticated_request(consumer):
 
 @pytest.mark.django_db
 def test_consumer_send_with_exception_no_authenticated_request(consumer):
-    with patch('apps.webhook.sender.requests') as mock_requests:
+    with patch('apps.webhook.sender.senders.requests') as mock_requests:
         mock_requests.request.side_effect = requests.exceptions.ConnectionError('an unexpected error happened')
         consumer.send()
         assert consumer.webhook.return_from_receiver_json is None
