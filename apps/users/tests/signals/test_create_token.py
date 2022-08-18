@@ -7,6 +7,7 @@ from apps.users.signals import create_token
 
 
 @pytest.fixture
+@pytest.mark.django_db
 def user():
     return baker.make(get_user_model())
 
