@@ -4,7 +4,7 @@ from django.conf import settings
 
 from apps.webhook.models import Webhook
 from apps.webhook.sender.consumer import WebhookSenderConsumer
-from apps.webhook.sender.senders import BasicSender
+from apps.webhook.sender.senders import WebhookSender
 
 
 class WebhookSenderManager:
@@ -30,7 +30,7 @@ class WebhookSenderManager:
 
     def execute(self, webhooks):
         for webhook in webhooks:
-            consumer = WebhookSenderConsumer(webhook, sender_class=BasicSender)
+            consumer = WebhookSenderConsumer(webhook, sender_class=WebhookSender)
             consumer.send()
 
     def filter(self):

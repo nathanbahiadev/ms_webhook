@@ -5,18 +5,18 @@ import pytest
 import requests.exceptions
 import responses
 
-from apps.webhook.sender.senders import BasicSender
+from apps.webhook.sender.senders import WebhookSender
 from apps.webhook.sender.consumer import WebhookSenderConsumer
 
 
 @pytest.fixture
 def consumer(webhook):
-    return WebhookSenderConsumer(webhook, sender_class=BasicSender)
+    return WebhookSenderConsumer(webhook, sender_class=WebhookSender)
 
 
 @pytest.mark.django_db
 def test_create_webhook_consumer_consumer_instance(consumer):
-    assert consumer.Sender.__name__ == 'BasicSender'
+    assert consumer.Sender.__name__ == 'WebhookSender'
 
 
 @pytest.mark.django_db
