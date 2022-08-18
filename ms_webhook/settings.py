@@ -109,3 +109,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
+
+WORKERS = 4
+MAX_JOBS_PER_WORKER = 5
